@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <style>
+        .btn-group {
+            display: flex;
+            align-items: center;
+        }
+        .btn-group .btn {
+            margin-right: 10px; /* Tugmalar orasidagi bo'shliq */
+        }
+        .btn-group .btn:last-child {
+            margin-right: 0; /* Oxirgi tugma uchun bo'shliqni olib tashlash */
+        }
+    </style>
+</head>
+<body>
+
+<h1 class="text-center bg-dark text-white">Books</h1>
+
+<div class="container">
+    <div class="d-flex justify-content-between mb-3">
+        <div class="btn-group">
+            <a class="btn btn-dark" href="/books/create">Add book</a>
+            <form action="/books/import" method="post" enctype="multipart/form-data" class="d-flex">
+                <input type="file" class="form-control-file" id="file" name="file" required>
+                <button type="submit" class="btn btn-primary ml-2">Import</button>
+            </form>
+            <a class="btn btn-success" href="/books/export">Export</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered mt-4">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book:${books}">
+        <td th:text="${book.id}"></td>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.price}"></td>
+        <td>
+            <div class="btn-group">
+                <form action="/books/update">
+                    <input type="hidden" name="id" th:value="${book.id}">
+                    <button class="btn-info">edit</button>
+                </form>
+                <form action="/books/delete" method="post">
+                    <input type="hidden" name="id" th:value="${book.id}">
+                    <button class="btn-danger">delete</button>
+                </form>
+            </div>
+        </td>
+
+    </tr>
+
+    </tbody>
+</table>
+
+
+</body>
+</html>

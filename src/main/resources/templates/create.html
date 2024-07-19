@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+</head>
+<body>
+<div class="col-6 offset-3">
+    <form th:action="${book==null?'/books':'/books/update/'+book.id}" method="post">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <span th:if="${book}">Update book</span>
+                <span th:unless="${book}">Create book</span>
+            </div>
+            <div class="card-body">
+                <input th:value="${book!=null ?book.title:''}" placeholder="Title"
+                       class="form-control m-2" type="text" name="title">
+                <input th:value="${book!=null ?book.author:''}" placeholder="Author" class="form-control m-2"
+                       type="text" name="author">
+                <input th:value="${book!=null ?book.price:''}" placeholder="Price" class="form-control m-2"
+                       type="number" name="price">
+            </div>
+            <div class="card-footer">
+                <button th:unless="${book}" class="btn btn-dark">save</button>
+                <button th:if="${book}" class="btn btn-info">update</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
